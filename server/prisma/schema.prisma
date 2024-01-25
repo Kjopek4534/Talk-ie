@@ -9,3 +9,112 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// Plik: schema.prisma
+
+// ... (poprzednie modele)
+
+model User {
+  id                Int           @id @default(autoincrement())
+  username          String        @unique
+  email             String        @unique
+  password          String
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+  messages          Message[]
+  userGroups        UserGroup[]
+  userChats         UserChat[]
+  UserSettings      UserSettings?
+  userFriends       Friendship[]  @relation(name: "users")
+  friendUserFriends Friendship[]  @relation(name: "friend_users")
+}
+
+model Message {
+  id          Int       @id @default(autoincrement())
+  userID      Int
+  chatID      Int?
+  groupID     Int?
+  type        String
+  content     String
+  sentAt      DateTime  @default(now())
+  deliveredAt DateTime?
+  seenAt      DateTime?
+
+  user  User   @relation(fields: [userID], references: [id])
+  group Group? @relation(fields: [groupID], references: [id])
+  chat  Chat?  @relation(fields: [chatID], references: [id])
+}
+
+model UserGroup {
+  id      Int @id @default(autoincrement())
+  userId  Int
+  groupId Int
+
+  user  User  @relation(fields: [userId], references: [id])
+  group Group @relation(fields: [groupId], references: [id])
+}
+
+model Group {
+  id                   Int      @id @default(autoincrement())
+  name                 String
+  receiveNotifications Boolean  @default(true)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  messages   Message[]
+  userGroups UserGroup[]
+}
+
+model UserChat {
+  id     Int @id @default(autoincrement())
+  userID Int
+  chatID Int
+
+  user User @relation(fields: [userID], references: [id])
+  chat Chat @relation(fields: [chatID], references: [id])
+}
+
+model Chat {
+  id                   Int      @id @default(autoincrement())
+  messageID            Int?
+  receiveNotifications Boolean  @default(true)
+  createdAt            DateTime @default(now())
+  updatedAt            DateTime @updatedAt
+
+  // Relacje z innymi modelami
+  messages  Message[]
+  userChats UserChat[]
+}
+
+model UserSettings {
+  id                   Int     @id @default(autoincrement())
+  userID               Int     @unique
+  // Dodaj tutaj pola reprezentujące różne ustawienia użytkownika
+  // Przykład:
+  receiveNotifications Boolean @default(true)
+  darkMode             Boolean @default(false)
+  language             String?
+
+  // Relacje z innymi modelami
+  user User @relation(fields: [userID], references: [id])
+}
+
+model Friendship {
+  id           Int              @id @default(autoincrement())
+  userId       Int
+  friendUserId Int
+  statusID     Int
+  Users        User             @relation(name: "users", fields: [userId], references: [id])
+  FriendUsers  User             @relation(name: "friend_users", fields: [friendUserId], references: [id])
+  Status       FriendshipStatus @relation(fields: [statusID], references: [id])
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  @@unique([userId, friendUserId])
+}
+
+model FriendshipStatus {
+  id         Int          @id @default(autoincrement())
+  status     String       @default("Pending")
+  friendship Friendship[]
+}
