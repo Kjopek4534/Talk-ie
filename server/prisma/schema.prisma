@@ -10,23 +10,20 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// Plik: schema.prisma
-
-// ... (poprzednie modele)
-
 model User {
-  id                Int           @id @default(autoincrement())
-  username          String        @unique
-  email             String        @unique
-  password          String
-  createdAt         DateTime      @default(now())
-  updatedAt         DateTime      @updatedAt
-  messages          Message[]
-  userGroups        UserGroup[]
-  userChats         UserChat[]
-  UserSettings      UserSettings?
-  userFriends       Friendship[]  @relation(name: "users")
-  friendUserFriends Friendship[]  @relation(name: "friend_users")
+  id           Int            @id @default(autoincrement())
+  username     String         @unique
+  email        String         @unique
+  password     String
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  messages     Message[]
+  userGroups   UserGroup[]
+  userChats    UserChat[]
+  UserSettings UserSettings[]
+
+  userFriends       Friendship[] @relation(name: "users")
+  friendUserFriends Friendship[] @relation(name: "friend_users")
 }
 
 model Message {
@@ -34,15 +31,22 @@ model Message {
   userID      Int
   chatID      Int?
   groupID     Int?
-  type        String
+  typeID      Int
   content     String
   sentAt      DateTime  @default(now())
   deliveredAt DateTime?
   seenAt      DateTime?
 
+  type  Type   @relation(fields: [typeID], references: [id])
   user  User   @relation(fields: [userID], references: [id])
   group Group? @relation(fields: [groupID], references: [id])
   chat  Chat?  @relation(fields: [chatID], references: [id])
+}
+
+model Type {
+  id      Int       @id @default(autoincrement())
+  type    String    @default("Text")
+  Message Message[]
 }
 
 model UserGroup {
@@ -81,7 +85,6 @@ model Chat {
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
 
-  // Relacje z innymi modelami
   messages  Message[]
   userChats UserChat[]
 }
@@ -89,26 +92,24 @@ model Chat {
 model UserSettings {
   id                   Int     @id @default(autoincrement())
   userID               Int     @unique
-  // Dodaj tutaj pola reprezentujące różne ustawienia użytkownika
-  // Przykład:
   receiveNotifications Boolean @default(true)
-  darkMode             Boolean @default(false)
+  darkMode             Boolean @default(true)
   language             String?
 
-  // Relacje z innymi modelami
   user User @relation(fields: [userID], references: [id])
 }
 
 model Friendship {
-  id           Int              @id @default(autoincrement())
+  id           Int      @id @default(autoincrement())
   userId       Int
   friendUserId Int
   statusID     Int
-  Users        User             @relation(name: "users", fields: [userId], references: [id])
-  FriendUsers  User             @relation(name: "friend_users", fields: [friendUserId], references: [id])
-  Status       FriendshipStatus @relation(fields: [statusID], references: [id])
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  Users       User             @relation(name: "users", fields: [userId], references: [id])
+  FriendUsers User             @relation(name: "friend_users", fields: [friendUserId], references: [id])
+  Status      FriendshipStatus @relation(fields: [statusID], references: [id])
 
   @@unique([userId, friendUserId])
 }
