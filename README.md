@@ -1,2 +1,2 @@
-# Placeholder-name
-A messegner web app for a school project.
+# Talk'ie
+A online web chat for a school project.
