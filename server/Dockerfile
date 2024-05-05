@@ -14,7 +14,7 @@ COPY . .
 
 # Copy the .env and .env.development files
 COPY .env ./
-COPY --from=builder /app/prisma ./prisma
+COPY ./prisma .
 
 EXPOSE 5000
 
