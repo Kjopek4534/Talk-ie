@@ -7,10 +7,10 @@ const prisma = new PrismaClient()
 
 @Injectable()
 export class UsersService {
-  async findOne(username: string): Promise<User | undefined> {
+  async findOne(user: string): Promise<User | undefined> {
     return prisma.user.findUnique({
       where: {
-        username: username,
+        username: `${user}`,
       },
     })
   }
