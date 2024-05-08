@@ -81,7 +81,6 @@ model UserChat {
 
 model Chat {
   id                   Int      @id @default(autoincrement())
-  messageID            Int?
   receiveNotifications Boolean  @default(true)
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt
