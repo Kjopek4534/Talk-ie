@@ -6,6 +6,8 @@ VALUES ('Jan', 'jan@gmail.com', '$2a$12$WNUF1RCG09RwPpp9Bq5X0OQEPD0Deu6ugB5pGc5q
        ('Anastazja', 'anastazja@wp.com', '$2a$12$zpJzuvfrCK8Tu/Y6yNa.7Oil1A0V.ABpJwvXMnRetoC0VBhbhkWbS', '2022-02-08 13:00:00', '2024-05-06 03:47:00'),
        ('Jerzy', 'zjuju11@intel.com', '$2a$12$zZfSj/synnIUcYIzxpKMlOSI51FFOs8PztNQ4SxQ2E9ncO39FLK2m', '2022-01-03 13:00:00', '2024-05-08 10:14:00');
 
+-- Hasła bez bcrypted: 'SikuSikuMocz!1', 'P@ssword^', '#Tatra$m1erdzi', 'Ry$$iu47', 'In#l2137'
+
 -- Group Sample Data
 INSERT INTO `Group` (id, name, receiveNotifications, createdAt, updatedAt)
 VALUES (1, 'Group 1', true, '2023-12-24 17:00:00', '2024-05-08 12:12:00'),
