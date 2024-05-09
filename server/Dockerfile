@@ -14,7 +14,7 @@ COPY . .
 
 # Copy the .env and .env.development files
 COPY .env ./
-COPY ./prisma .
+COPY prisma ./prisma/
 
 EXPOSE 5000
 
