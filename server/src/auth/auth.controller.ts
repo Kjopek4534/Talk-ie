@@ -19,7 +19,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @HttpCode(HttpStatus.OK)
-  @Post('login')
+  @Post('signin')
   @ApiOperation({ summary: 'User Login' })
   @ApiResponse({
     status: 200,
@@ -28,12 +28,6 @@ export class AuthController {
   })
   async signIn(@Body() signInDto: Record<string, any>) {
     return await this.authService.signIn(signInDto.username, signInDto.password)
-  }
-
-  @UseGuards(AuthGuard)
-  @Get('profile')
-  getProfile(@Request() req) {
-    return req.user
   }
   @HttpCode(HttpStatus.OK)
   @Post('signup')

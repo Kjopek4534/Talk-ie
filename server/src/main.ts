@@ -1,20 +1,21 @@
+// server/src/main.ts
 import { NestFactory } from '@nestjs/core'
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { AppModule } from './app.module'
+import helmet from 'helmet'
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule)
 
-  const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
-    .setVersion('1.0')
-    .addTag('cats')
-    .build()
-  const document = SwaggerModule.createDocument(app, config)
-  SwaggerModule.setup('api', app, document)
+  // Enable CORS using NestJS built-in method
+  app.enableCors({
+    origin: 'http://localhost:3000', // Adjust this to match your frontend URL
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
+    credentials: true,
+  })
+
+  // Use helmet for security
+  app.use(helmet())
 
   await app.listen(5000)
 }
-
-bootstrap().then(() => console.log('Server is running'))
+bootstrap()

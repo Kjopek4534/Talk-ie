@@ -2,3 +2,4 @@ Dockerfile
 npm-debug.log
 README.md
 .git
+node_modules/
