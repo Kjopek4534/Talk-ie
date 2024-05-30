@@ -1,0 +1,7 @@
+Background - 2F2F2F
+Font Color - FFFFFF
+Buttons - E58C39
+Labels - F2C77F
+Your Chatbox - EBAF65
+Friend's Chatbox - FFE9C5
+Option Box - 3F3F3F
