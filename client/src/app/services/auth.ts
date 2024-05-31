@@ -13,3 +13,5 @@ export const signUp = async (
 ) => {
   return axios.post(`${API_URL}/auth/signup`, { username, email, password })
 }
+
+//test
