@@ -27,7 +27,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
-  background-color: #3f3f3f;
+  background-color: #f2c77f;
   color: #ffffff;
 }
 
@@ -44,10 +44,6 @@
   margin: 20px 0;
   font-size: 18px;
   font-weight: bold;
-}
-
-.button:hover {
-  background-color: #d7792e;
 }
 
 .link {

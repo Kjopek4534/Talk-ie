@@ -10,12 +10,13 @@
 }
 
 .logo {
-  width: 150px;
-  margin-bottom: 20px;
+  width: 30vh;
+  height: 30vh;
+  margin-bottom: 10px;
 }
 
 .title {
-  font-size: 28px;
+  font-size: 8vh;
   margin-bottom: 40px;
   color: #ffffff;
 }
@@ -28,38 +29,34 @@
 }
 
 .button {
-  width: 80%;
-  padding: 15px;
-  background-color: #e58c39;
-  color: white;
+  width: 50%;
+  color: #fff;
   border: none;
-  border-radius: 4px;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
-  margin: 10px 0;
-  font-size: 18px;
-  font-weight: bold;
+  font-size: 5vh;
 }
 
 .button:hover {
-  background-color: #d7792e;
+  color: #eee;
 }
 
 .orContainer {
   display: flex;
   align-items: center;
-  margin: 20px 0;
-}
-
-.line {
-  flex: 1;
-  height: 1px;
-  background-color: #ffffff;
-  margin: 0 10px;
 }
 
 .orText {
-  color: #ffffff;
-  font-size: 16px;
+  color: #e58c39;
+  font-size: 4vh;
+}
+
+.line {
+  flex: 100;
+  width: 12.5vh;
+  height: 0.5vh;
+  border-radius: 15%;
+  background-color: #fff;
+  margin: 0 10px;
 }

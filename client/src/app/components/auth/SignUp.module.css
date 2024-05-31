@@ -27,7 +27,7 @@
   border: 1px solid #ccc;
   border-radius: 4px;
   font-size: 16px;
-  background-color: #3f3f3f;
+  background-color: #f2c77f;
   color: #ffffff;
 }
 
@@ -54,10 +54,6 @@
   margin-top: 10px;
   color: #e58c39;
   text-decoration: none;
-}
-
-.link:hover {
-  text-decoration: underline;
 }
 
 .error {
