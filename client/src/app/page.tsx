@@ -3,6 +3,10 @@ import Link from 'next/link'
 import Image from 'next/image'
 import styles from './styles/page.module.css'
 
+export const metadata = {
+  title: "Talk'ie - Let's talk",
+}
+
 export default function HomePage() {
   return (
     <div className={styles.container}>
