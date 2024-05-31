@@ -1,3 +1,4 @@
+// client/src/app/layout.tsx
 import './styles/globals.css'
 
 export default function RootLayout({
@@ -8,9 +9,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <header>
-          <h1>Talk'ie</h1>
-        </header>
         <main>{children}</main>
       </body>
     </html>
