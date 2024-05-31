@@ -32,13 +32,15 @@ const SignUp = () => {
 
   return (
     <div className={styles.container}>
-      <Image
-        src="/logo.png"
-        alt="Talk'ie Logo"
-        width={100}
-        height={100}
-        className={styles.logo}
-      />
+      <Link href="/">
+        <Image
+          src="/logo.png"
+          alt="Talk'ie Logo"
+          width={100}
+          height={100}
+          className={styles.logo}
+        />
+      </Link>
       <h2 className={styles.title}>Talk'ie</h2>
       {error && <p className={styles.error}>{error}</p>}
       <input
