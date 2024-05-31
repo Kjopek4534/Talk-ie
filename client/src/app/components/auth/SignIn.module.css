@@ -9,18 +9,19 @@
 }
 
 .logo {
-  width: 100px;
-  margin-bottom: 20px;
+  width: 26.25vh;
+  height: 26.25vh;
+  margin-bottom: 10px;
 }
 
 .title {
-  font-size: 24px;
+  font-size: 7vh;
   margin-bottom: 20px;
-  color: #ffffff;
+  color: #fff;
 }
 
 .input {
-  width: 100%;
+  width: 80%;
   padding: 10px;
   margin: 10px 0;
   border: 1px solid #ccc;
@@ -31,7 +32,7 @@
 }
 
 .button {
-  width: 100%;
+  width: 50%;
   padding: 15px;
   background-color: #e58c39;
   color: white;
@@ -52,7 +53,9 @@
 }
 
 .link:hover {
-  text-decoration: underline;
+  text-decoration: #f8c997;
+  transition: 0.3s;
+  font-size: 102.5%;
 }
 
 .error {

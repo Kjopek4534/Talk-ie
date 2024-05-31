@@ -14,6 +14,18 @@ body {
   background-color: #2f2f2f;
 }
 
+.logo {
+  width: 30vh;
+  height: 30vh;
+  margin-bottom: 10px;
+}
+
+.title {
+  font-size: 8vh;
+  margin-bottom: 40px;
+  color: #fff;
+}
+
 .input {
   width: 100%;
   padding: 10px;
