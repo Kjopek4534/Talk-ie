@@ -1,0 +1,7 @@
+Background - #2f2f2f
+Font Color - #fff
+Buttons - #e58c39
+Labels - #f2c77f
+Your Chatbox - #ebaf65
+Friend's Chatbox - #ffe9c5
+Option Box - #3f3f3f
