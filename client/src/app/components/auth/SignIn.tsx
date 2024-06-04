@@ -5,8 +5,12 @@ import { useState } from 'react'
 import { signIn } from '../../services/auth'
 import Link from 'next/link'
 import Image from 'next/image'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import styles from './SignIn.module.css'
+
+interface ErrorResponse {
+  error: string
+}
 
 const SignIn = () => {
   const [username, setUsername] = useState('')
@@ -19,14 +23,13 @@ const SignIn = () => {
       const response = await signIn(username, password)
       console.log('Signed in successfully', response.data)
       setError(null)
-    } catch (err: unknown) {
+    } catch (err) {
       console.error('Error signing in', err)
       if (axios.isAxiosError(err)) {
-        if (err.response?.status === 401) {
-          setError('Invalid username or password')
-        } else {
-          setError(err.response?.data?.error || 'An unexpected error occurred')
-        }
+        const axiosErr = err as AxiosError<ErrorResponse>
+        const errorMessage =
+          axiosErr.response?.data?.error || 'An unexpected error occurred'
+        setError(errorMessage)
       } else {
         setError('An unexpected error occurred')
       }

@@ -12,24 +12,40 @@ const SignUp = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [error, setError] = useState<string | null>(null)
+  const [errors, setErrors] = useState<string[]>([])
 
   const handleSignUp = async () => {
     console.log('Sign Up button clicked')
+
+    if (!username || !email || !password) {
+      setErrors(['Please fill in all fields'])
+      return
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    if (!emailRegex.test(email)) {
+      setErrors(['Please enter a valid email address'])
+      return
+    }
+
     try {
       const response = await signUp(username, email, password)
       console.log('Signed up successfully', response.data)
-      setError(null)
+      setErrors([])
     } catch (err: unknown) {
       console.error('Error signing up', err)
       if (axios.isAxiosError(err)) {
+        console.log('Axios error response:', err.response) // Log the error response
         if (err.response?.status === 400) {
-          setError('Sign up failed')
+          console.log('Siku Siku Mocz')
+          setErrors(['Sign up failed'])
         } else {
-          setError(err.response?.data?.error || 'An unexpected error occurred')
+          setErrors([
+            err.response?.data?.error || 'An unexpected error occurred',
+          ])
         }
       } else {
-        setError('An unexpected error occurred')
+        setErrors(['An unexpected error occurred'])
       }
     }
   }
@@ -46,7 +62,7 @@ const SignUp = () => {
         />
       </Link>
       <h2 className={styles.title}>Talk'ie</h2>
-      {error && <p className={styles.error}>{error}</p>}
+      {errors && <p className={styles.error}>{errors}</p>}
       <input
         type="text"
         value={username}

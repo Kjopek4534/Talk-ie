@@ -44,7 +44,7 @@ describe('SignUp', () => {
       target: { value: 'testuser' },
     })
     fireEvent.change(screen.getByPlaceholderText(/Email/i), {
-      target: { value: 'test@example.com' },
+      target: { value: 'testexample.com' },
     })
     fireEvent.change(screen.getByPlaceholderText(/Password/i), {
       target: { value: 'password123' },
