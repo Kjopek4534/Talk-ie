@@ -81,7 +81,7 @@ model UserChat {
 
 model Chat {
   id                   Int      @id @default(autoincrement())
-  name                 String   // Ensure this line is present if a name field is required
+  name                 String   @default("Chat")
   receiveNotifications Boolean  @default(true)
   createdAt            DateTime @default(now())
   updatedAt            DateTime @updatedAt

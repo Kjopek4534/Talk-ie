@@ -23,7 +23,7 @@ export class MessagesController {
     return this.messagesService.createMessage(createMessageDto)
   }
 
-  @Get('chat/:chatId')
+  @Get('chats/:chatId')
   async findAllForChat(@Param('chatId') chatId: number) {
     return this.messagesService.findAllMessagesForChat(chatId)
   }
