@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import SignUpPage from '@/app/auth/signup/page'
 
-describe('SignUp', () => {
+describe('SignUpPage', () => {
   it('renders the sign up page', () => {
     render(<SignUpPage />) //Arrange
 
