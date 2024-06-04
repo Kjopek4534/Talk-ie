@@ -65,6 +65,7 @@ CREATE TABLE "UserChat" (
 -- CreateTable
 CREATE TABLE "Chat" (
     "id" SERIAL NOT NULL,
+    "name" TEXT NOT NULL DEFAULT 'Chat',
     "messageID" INTEGER,
     "receiveNotifications" BOOLEAN NOT NULL DEFAULT true,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
