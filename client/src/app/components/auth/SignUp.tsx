@@ -23,7 +23,11 @@ const SignUp = () => {
     } catch (err: unknown) {
       console.error('Error signing up', err)
       if (axios.isAxiosError(err)) {
-        setError(err.response?.data?.error || 'An unexpected error occurred')
+        if (err.response?.status === 400) {
+          setError('Sign up failed')
+        } else {
+          setError(err.response?.data?.error || 'An unexpected error occurred')
+        }
       } else {
         setError('An unexpected error occurred')
       }
