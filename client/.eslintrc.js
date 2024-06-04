@@ -10,6 +10,8 @@ module.exports = {
     'plugin:@next/next/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended',
+    'plugin:testing-library/react',
+    'plugin:jest-dom/recommended',
   ],
   root: true,
   ignorePatterns: ['.eslintrc.js'],
