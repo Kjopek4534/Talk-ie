@@ -1,8 +1,6 @@
-import SignIn from '../../components/auth/SignIn'
+'use client'
 
-export const metadata = {
-  title: "Talk'ie - Sign In",
-}
+import SignIn from '@/app/components/auth/SignIn'
 
 export default function SignInPage() {
   return <SignIn />

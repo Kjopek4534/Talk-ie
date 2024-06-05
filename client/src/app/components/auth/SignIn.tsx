@@ -1,24 +1,27 @@
-// client/src/app/components/auth/SignIn.tsx
 'use client'
 
 import { useState } from 'react'
-import { signIn } from '../../services/auth'
+import { signIn } from '@/app/services/auth'
 import Link from 'next/link'
 import Image from 'next/image'
 import axios from 'axios'
-import styles from './SignIn.module.css'
+import styles from '@/app/styles/SignIn.module.css'
+import { useRouter } from 'next/navigation'
 
 const SignIn = () => {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   const handleSignIn = async () => {
     console.log('Sign In button clicked')
     try {
       const response = await signIn(username, password)
       console.log('Signed in successfully', response.data)
+      localStorage.setItem('token', response.data.access_token) // Save JWT token
       setError(null)
+      router.push('/chats') // Redirect to main chat page
     } catch (err: unknown) {
       console.error('Error signing in', err)
       if (axios.isAxiosError(err)) {

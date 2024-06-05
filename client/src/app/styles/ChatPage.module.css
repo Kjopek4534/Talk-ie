@@ -1,0 +1,46 @@
+.container {
+  padding: 20px;
+  background-color: #2f2f2f;
+  color: #ffffff;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin-bottom: 20px;
+}
+
+.chatList {
+  list-style-type: none;
+  padding: 0;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.chatList li {
+  margin: 10px 0;
+  cursor: pointer;
+}
+
+.chatList li a {
+  color: #e58c39;
+  text-decoration: none;
+}
+
+.chatList li a:hover {
+  text-decoration: underline;
+}
+
+.button {
+  padding: 10px 20px;
+  background-color: #e58c39;
+  border: none;
+  color: #ffffff;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.button:hover {
+  background-color: #cf7b30;
+}

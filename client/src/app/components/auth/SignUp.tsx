@@ -1,18 +1,19 @@
-// client/src/app/components/auth/SignUp.tsx
 'use client'
 
 import { useState } from 'react'
-import { signUp } from '../../services/auth'
+import { signUp } from '@/app/services/auth'
 import Link from 'next/link'
 import Image from 'next/image'
 import axios from 'axios'
-import styles from './SignUp.module.css'
+import styles from '@/app/styles/SignUp.module.css'
+import { useRouter } from 'next/navigation'
 
 const SignUp = () => {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
 
   const handleSignUp = async () => {
     console.log('Sign Up button clicked')
@@ -20,6 +21,7 @@ const SignUp = () => {
       const response = await signUp(username, email, password)
       console.log('Signed up successfully', response.data)
       setError(null)
+      router.push('/auth/signin') // Redirect to sign in page
     } catch (err: unknown) {
       console.error('Error signing up', err)
       if (axios.isAxiosError(err)) {

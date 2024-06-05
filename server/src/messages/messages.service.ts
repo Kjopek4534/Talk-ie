@@ -22,7 +22,9 @@ export class MessagesService {
 
   async findAllMessagesForChat(chatId: number) {
     return this.prisma.message.findMany({
-      where: { chatID: chatId },
+      where: {
+        chatID: chatId,
+      },
       orderBy: {
         sentAt: 'asc',
       },
@@ -30,8 +32,11 @@ export class MessagesService {
   }
 
   async findAllMessagesForGroup(groupId: number) {
+    const parsedGroupId = parseInt(groupId.toString(), 10)
     return this.prisma.message.findMany({
-      where: { groupID: groupId },
+      where: {
+        groupID: parsedGroupId, // Ensure groupId is an integer
+      },
       orderBy: {
         sentAt: 'asc',
       },

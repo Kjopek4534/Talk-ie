@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   UseGuards,
+  ParseIntPipe,
 } from '@nestjs/common'
 import { MessagesService } from './messages.service'
 import { CreateMessageDto } from './dto/create-message.dto'
@@ -24,12 +25,13 @@ export class MessagesController {
   }
 
   @Get('chats/:chatId')
-  async findAllForChat(@Param('chatId') chatId: number) {
-    return this.messagesService.findAllMessagesForChat(chatId)
+  async getMessagesForChat(@Param('chatId') chatId: string) {
+    const parsedChatId = parseInt(chatId, 10)
+    return this.messagesService.findAllMessagesForChat(parsedChatId)
   }
 
-  @Get('group/:groupId')
-  async findAllForGroup(@Param('groupId') groupId: number) {
+  @Get('groups/:groupId')
+  async getMessagesForGroup(@Param('groupId', ParseIntPipe) groupId: number) {
     return this.messagesService.findAllMessagesForGroup(groupId)
   }
 
