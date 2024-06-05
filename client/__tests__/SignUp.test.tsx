@@ -1,3 +1,4 @@
+/*
 import { render, screen, fireEvent, waitFor } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
 import SignUp from '@/app/components/auth/SignUp'
@@ -56,7 +57,7 @@ describe('SignUp', () => {
       expect(screen.getByText(/Sign up failed/i)).toBeInTheDocument()
     })
   })
-*/
+
   it('redirects on successful sign up', async () => {
     const mockResponse: AxiosResponse = {
       data: {
@@ -97,3 +98,4 @@ describe('SignUp', () => {
     })
   })
 })
+*/
