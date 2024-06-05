@@ -1,101 +1,62 @@
-/*
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
-import '@testing-library/jest-dom/extend-expect'
-import SignUp from '@/app/components/auth/SignUp'
-import { signUp } from '@/app/services/auth'
-import { AxiosResponse, AxiosHeaders } from 'axios'
-// import { AxiosResponse, AxiosError, AxiosHeaders } from 'axios'
+import React from 'react';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
+import SignUp from '@/app/components/auth/SignUp';
+import { useRouter } from 'next/navigation';
+import { signUp } from '@/app/services/auth';
+import '@testing-library/jest-dom/extend-expect';
+
+// Mock the useRouter hook
+jest.mock('next/navigation', () => ({
+    useRouter: jest.fn(),
+}));
 
 // Mock the signUp function
-jest.mock('@/app/services/auth')
+jest.mock('@/app/services/auth', () => ({
+    signUp: jest.fn(),
+}));
 
-describe('SignUp', () => {
-  it('renders the sign up form', () => {
-    render(<SignUp />)
+describe('SignUp Component', () => {
+    const pushMock = jest.fn();
+    const signUpMock = signUp as jest.Mock;
 
-    expect(screen.getByPlaceholderText(/Username/i)).toBeInTheDocument()
-    expect(screen.getByPlaceholderText(/Email/i)).toBeInTheDocument()
-    expect(screen.getByPlaceholderText(/Password/i)).toBeInTheDocument()
-    expect(screen.getByRole('button', { name: /Sign Up/i })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: /Log In/i })).toBeInTheDocument()
-  })
-  /*
-  it('shows an error message on failed sign up', async () => {
-    const errorResponse: Partial<AxiosError> = {
-      response: {
-        data: {
-          error: 'Sign up failed',
-        },
-        status: 400,
-        statusText: 'Bad Request',
-        headers: new AxiosHeaders(),
-        config: {
-          headers: new AxiosHeaders(),
-        },
-      },
-    }
+    beforeEach(() => {
+        (useRouter as jest.Mock).mockReturnValue({ push: pushMock });
+    });
 
-    ;(signUp as jest.MockedFunction<typeof signUp>).mockRejectedValue(
-      errorResponse,
-    )
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
 
-    render(<SignUp />)
+    it('displays an error message if sign up fails', async () => {
+        const errorMessage = 'An unexpected error occurred';
+        signUpMock.mockRejectedValueOnce({ response: { data: { error: errorMessage } } });
 
-    fireEvent.change(screen.getByPlaceholderText(/Username/i), {
-      target: { value: 'testuser' },
-    })
-    fireEvent.change(screen.getByPlaceholderText(/Email/i), {
-      target: { value: 'testexample.com' },
-    })
-    fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-      target: { value: 'password123' },
-    })
+        render(<SignUp />);
 
-    fireEvent.click(screen.getByRole('button', { name: /Sign Up/i }))
+        fireEvent.change(screen.getByPlaceholderText('Username'), { target: { value: 'Jan' } });
+        fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'testuser@example.com' } });
+        fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'SikuSikuMocz!1' } });
 
-    await waitFor(() => {
-      expect(screen.getByText(/Sign up failed/i)).toBeInTheDocument()
-    })
-  })
+        fireEvent.click(screen.getByText('Sign Up'));
 
-  it('redirects on successful sign up', async () => {
-    const mockResponse: AxiosResponse = {
-      data: {
-        message: 'Signed up successfully',
-      },
-      status: 200,
-      statusText: 'OK',
-      headers: new AxiosHeaders({
-        'content-type': 'application/json',
-      }),
-      config: {
-        headers: new AxiosHeaders({
-          'content-type': 'application/json',
-        }),
-      },
-    }
+        await waitFor(() => {
+            expect(screen.getByText(errorMessage)).toBeInTheDocument();
+        });
+    });
 
-    ;(signUp as jest.MockedFunction<typeof signUp>).mockResolvedValue(
-      mockResponse,
-    )
+    it('redirects to the sign-in page on successful sign up', async () => {
+        signUpMock.mockResolvedValueOnce({ data: {} });
 
-    render(<SignUp />)
+        render(<SignUp />);
 
-    fireEvent.change(screen.getByPlaceholderText(/Username/i), {
-      target: { value: 'testuser' },
-    })
-    fireEvent.change(screen.getByPlaceholderText(/Email/i), {
-      target: { value: 'test@example.com' },
-    })
-    fireEvent.change(screen.getByPlaceholderText(/Password/i), {
-      target: { value: 'password123' },
-    })
+        fireEvent.change(screen.getByPlaceholderText('Username'), { target: { value: 'Jan' } });
+        fireEvent.change(screen.getByPlaceholderText('Email'), { target: { value: 'testuser@example.com' } });
+        fireEvent.change(screen.getByPlaceholderText('Password'), { target: { value: 'SikuSikuMocz!1' } });
 
-    fireEvent.click(screen.getByRole('button', { name: /Sign Up/i }))
+        fireEvent.click(screen.getByText('Sign Up'));
 
-    await waitFor(() => {
-      expect(screen.queryByText(/Sign up failed/i)).not.toBeInTheDocument()
-    })
-  })
-})
-*/
+        await waitFor(() => {
+            expect(pushMock).toHaveBeenCalledWith('/auth/signin');
+        });
+    });
+});
