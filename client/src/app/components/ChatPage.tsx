@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import styles from '../styles/ChatPage.module.css'
 
 interface Chat {
   id: number
@@ -52,15 +53,19 @@ const ChatPage = () => {
   }
 
   return (
-    <div>
-      <h1>Chats</h1>
-      <ul>
-        {chats.map((chat) => (
-          <li key={chat.id}>
-            <a href={`/chats/${chat.id}`}>{chat.name}</a>
-          </li>
-        ))}
-      </ul>
+    <div className={styles.container}>
+      <div className={styles.containerLeft}>
+        <h1 className={styles.title}>Your Talk'ies</h1>
+        <input type="text" placeholder="Search" className={styles.input} />
+        <ul className={styles.chatList}>
+          {chats.map((chat) => (
+            <li key={chat.id}>
+              <a href={`/chats/${chat.id}`}>{chat.name}</a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className={styles.containerRight}></div>
     </div>
   )
 }
