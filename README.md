@@ -31,11 +31,11 @@
 
 **Krok 1:** Pobierz [Docker'a](https://docs.docker.com/get-docker/).
 
-**Krok 2:** Sklonuj [repozytorium](https://github.com/Kjopek4534/Talk-ie.git) na swój komputer. 
+**Krok 2:** Sklonuj [repozytorium](https://github.com/Kjopek4534/Talk-ie.git) na swój komputer: https://github.com/Kjopek4534/Talk-ie.git .
 
-**Krok 3:** Odpal termilnal i wpisz komendę *docker compose build*.
+**Krok 3:** Odpal termilnal i wpisz komendę *docker compose build* .
 
-**Krok 4:** Wpisz kolejną komedę do terminala: *docker compose up*.
+**Krok 4:** Wpisz kolejną komedę do terminala: *docker compose up* .
 
 **Krok 5:** Odpal swoja przegladarkę i odpal [localhost'a na porcie 3000](http://localhost:3000/).
     
