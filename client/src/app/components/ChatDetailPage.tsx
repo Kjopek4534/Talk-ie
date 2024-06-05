@@ -19,8 +19,7 @@ interface User {
 
 const ChatDetailPage = () => {
   const router = useRouter()
-  const params = useParams()
-  const chatId = Array.isArray(params.chatId) ? params.chatId[0] : params.chatId
+  const { chatId } = useParams()
   const [messages, setMessages] = useState<Message[]>([])
   const [error, setError] = useState<string | null>(null)
   const [currentUserId, setCurrentUserId] = useState<number | null>(null)
@@ -89,13 +88,15 @@ const ChatDetailPage = () => {
 
   const handleSendMessage = async () => {
     const token = localStorage.getItem('token')
-    if (token && newMessage.trim()) {
+    if (token && newMessage.trim() && currentUserId !== null) {
       try {
         const response = await axios.post<Message>(
-          `http://localhost:5000/messages`,
+          'http://localhost:5000/messages',
           {
-            chatID: parseInt(chatId, 10),
             content: newMessage,
+            userID: currentUserId,
+            chatID: parseInt(chatId, 10),
+            typeID: 1, // Assuming a default typeID if not provided
           },
           {
             headers: {

@@ -1,30 +1,22 @@
-// server/src/messages/dto/create-message.dto.ts
-import { IsString, IsNotEmpty, IsOptional, IsInt } from 'class-validator'
-import { ApiProperty } from '@nestjs/swagger'
+import { IsNotEmpty, IsOptional, IsInt } from 'class-validator'
 
 export class CreateMessageDto {
-  @ApiProperty()
-  @IsString()
   @IsNotEmpty()
   content: string
 
-  @ApiProperty()
   @IsInt()
   @IsNotEmpty()
-  senderId: number
+  userID: number
 
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsInt()
-  chatId?: number
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsInt()
-  groupId?: number
-
-  @ApiProperty()
   @IsInt()
   @IsNotEmpty()
-  typeId: number
+  chatID: number
+
+  @IsInt()
+  @IsOptional()
+  groupID?: number
+
+  @IsInt()
+  @IsNotEmpty()
+  typeID: number // Assuming a default typeID if not provided
 }

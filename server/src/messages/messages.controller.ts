@@ -8,6 +8,8 @@ import {
   Patch,
   UseGuards,
   ParseIntPipe,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common'
 import { MessagesService } from './messages.service'
 import { CreateMessageDto } from './dto/create-message.dto'
@@ -20,6 +22,7 @@ export class MessagesController {
   constructor(private readonly messagesService: MessagesService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   async create(@Body() createMessageDto: CreateMessageDto) {
     return this.messagesService.createMessage(createMessageDto)
   }

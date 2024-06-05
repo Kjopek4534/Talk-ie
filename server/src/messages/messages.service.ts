@@ -12,14 +12,13 @@ export class MessagesService {
     return this.prisma.message.create({
       data: {
         content: createMessageDto.content,
-        userID: createMessageDto.senderId,
-        chatID: createMessageDto.chatId,
-        groupID: createMessageDto.groupId,
-        typeID: createMessageDto.typeId,
+        userID: createMessageDto.userID,
+        chatID: createMessageDto.chatID,
+        groupID: createMessageDto.groupID || null,
+        typeID: createMessageDto.typeID || 1, // Assuming a default typeID if not provided
       },
     })
   }
-
   async findAllMessagesForChat(chatId: number) {
     return this.prisma.message.findMany({
       where: {
