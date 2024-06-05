@@ -3,7 +3,10 @@ import axios from 'axios'
 const API_URL = 'http://localhost:5000'
 
 export const signIn = async (username: string, password: string) => {
-  return axios.post(`${API_URL}/auth/signin`, { username, password })
+  return await axios.post('http://localhost:5000/auth/signin', {
+    username,
+    password,
+  })
 }
 
 export const signUp = async (

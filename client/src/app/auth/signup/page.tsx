@@ -1,8 +1,6 @@
-import SignUp from '../../components/auth/SignUp'
+'use client'
 
-export const metadata = {
-  title: "Talk'ie - Sign Up",
-}
+import SignUp from '@/app/components/auth/SignUp'
 
 export default function SignUpPage() {
   return <SignUp />

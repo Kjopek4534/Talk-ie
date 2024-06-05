@@ -1,53 +1,46 @@
-// server/src/messages/messages.gateway.ts
 import {
+  SubscribeMessage,
   WebSocketGateway,
   WebSocketServer,
-  SubscribeMessage,
+  OnGatewayInit,
+  OnGatewayConnection,
+  OnGatewayDisconnect,
   MessageBody,
 } from '@nestjs/websockets'
-import { Server } from 'socket.io'
-import { MessagesService } from './messages.service'
+import { Server, Socket } from 'socket.io'
 import { CreateMessageDto } from './dto/create-message.dto'
-import { UpdateDeliveryStatusDto } from './dto/update-delivery-status.dto'
+import { MessagesService } from './messages.service'
 
 @WebSocketGateway()
-export class MessagesGateway {
+export class MessagesGateway
+  implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect
+{
   @WebSocketServer() server: Server
 
   constructor(private readonly messagesService: MessagesService) {}
 
+  afterInit() {
+    console.log('WebSocket initialized')
+  }
+
+  handleConnection(client: Socket) {
+    console.log('Client connected:', client.id)
+  }
+
+  handleDisconnect(client: Socket) {
+    console.log('Client disconnected:', client.id)
+  }
+
   @SubscribeMessage('sendMessage')
-  async handleSendMessage(@MessageBody() createMessageDto: CreateMessageDto) {
+  async handleMessage(@MessageBody() createMessageDto: CreateMessageDto) {
     const message = await this.messagesService.createMessage(createMessageDto)
-    if (createMessageDto.chatId) {
+
+    if (createMessageDto.chatID) {
+      this.server.to(`chat_${createMessageDto.chatID}`).emit('message', message)
+    } else if (createMessageDto.groupID) {
       this.server
-        .to(`chat_${createMessageDto.chatId}`)
-        .emit('receiveMessage', message)
-    } else if (createMessageDto.groupId) {
-      this.server
-        .to(`group_${createMessageDto.groupId}`)
-        .emit('receiveMessage', message)
+        .to(`group_${createMessageDto.groupID}`)
+        .emit('message', message)
     }
-  }
-
-  @SubscribeMessage('joinChat')
-  handleJoinChat(client: any, chatId: number) {
-    client.join(`chat_${chatId}`)
-  }
-
-  @SubscribeMessage('joinGroup')
-  handleJoinGroup(client: any, groupId: number) {
-    client.join(`group_${groupId}`)
-  }
-
-  @SubscribeMessage('updateDeliveryStatus')
-  async handleUpdateDeliveryStatus(
-    @MessageBody() data: { id: number; status: UpdateDeliveryStatusDto },
-  ) {
-    const message = await this.messagesService.updateDeliveryStatus(
-      data.id,
-      data.status,
-    )
-    this.server.emit('messageUpdated', message)
   }
 }

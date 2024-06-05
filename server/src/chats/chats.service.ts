@@ -146,14 +146,21 @@ export class ChatsService {
   }
 
   async getUserChats(userId: number): Promise<ChatDto[]> {
+    const parsedUserId = parseInt(userId.toString(), 10) // Ensure userId is an integer
     const userChats = await this.prisma.user.findUnique({
-      where: { id: userId },
+      where: {
+        id: parsedUserId,
+      },
       include: {
         userChats: {
           include: { chat: true },
         },
       },
     })
+
+    if (!userChats) {
+      throw new NotFoundException('User not found or no chats available')
+    }
 
     return userChats.userChats.map((userChat) => ({
       id: userChat.chat.id,
@@ -163,14 +170,21 @@ export class ChatsService {
   }
 
   async getUserGroups(userId: number): Promise<ChatDto[]> {
+    const parsedUserId = parseInt(userId.toString(), 10) // Ensure userId is an integer
     const userGroups = await this.prisma.user.findUnique({
-      where: { id: userId },
+      where: {
+        id: parsedUserId,
+      },
       include: {
         userGroups: {
           include: { group: true },
         },
       },
     })
+
+    if (!userGroups) {
+      throw new NotFoundException('User not found or no groups available')
+    }
 
     return userGroups.userGroups.map((userGroup) => ({
       id: userGroup.group.id,

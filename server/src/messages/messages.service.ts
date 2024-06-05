@@ -12,17 +12,18 @@ export class MessagesService {
     return this.prisma.message.create({
       data: {
         content: createMessageDto.content,
-        userID: createMessageDto.senderId,
-        chatID: createMessageDto.chatId,
-        groupID: createMessageDto.groupId,
-        typeID: createMessageDto.typeId,
+        userID: createMessageDto.userID,
+        chatID: createMessageDto.chatID,
+        groupID: createMessageDto.groupID || null,
+        typeID: createMessageDto.typeID || 1, // Assuming a default typeID if not provided
       },
     })
   }
-
   async findAllMessagesForChat(chatId: number) {
     return this.prisma.message.findMany({
-      where: { chatID: chatId },
+      where: {
+        chatID: chatId,
+      },
       orderBy: {
         sentAt: 'asc',
       },
@@ -30,8 +31,11 @@ export class MessagesService {
   }
 
   async findAllMessagesForGroup(groupId: number) {
+    const parsedGroupId = parseInt(groupId.toString(), 10)
     return this.prisma.message.findMany({
-      where: { groupID: groupId },
+      where: {
+        groupID: parsedGroupId, // Ensure groupId is an integer
+      },
       orderBy: {
         sentAt: 'asc',
       },
