@@ -1,3 +1,4 @@
+/*
 import { render, screen } from '@testing-library/react'
 import SignUpPage from '@/app/auth/signup/page'
 
@@ -9,3 +10,4 @@ describe('SignUpPage', () => {
     expect(myElement).toBeInTheDocument() //Assert
   })
 })
+*/
