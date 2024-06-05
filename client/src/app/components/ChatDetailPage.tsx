@@ -129,11 +129,14 @@ const ChatDetailPage = () => {
   }
 
   return (
-    <div className={styles.chatContainer}>
-      <h1>Chat Messages</h1>
-      <button onClick={handleGoBack} className={styles.goBackButton}>
-        Go Back
-      </button>
+    <div className={styles.container}>
+      <div className={styles.topPanel}>
+        <button onClick={handleGoBack} className={styles.goBackButton}>
+          &lt;
+        </button>
+        <h1 className={styles.title}>Username</h1>
+        <p></p>
+      </div>
       <ul className={styles.messageList}>
         {messages.map((message) => (
           <li
