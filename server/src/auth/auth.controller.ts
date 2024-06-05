@@ -1,4 +1,11 @@
-import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common'
+import {
+  BadRequestException,
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+} from '@nestjs/common'
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger'
 import { AuthService } from './auth.service'
 import { BaseUser } from '../users/dto/base-user.dto'
@@ -19,6 +26,7 @@ export class AuthController {
   async signIn(@Body() signInDto: Record<string, any>) {
     return await this.authService.signIn(signInDto.username, signInDto.password)
   }
+
   @HttpCode(HttpStatus.OK)
   @Post('signup')
   @ApiOperation({ summary: 'User Signup' })
@@ -28,6 +36,12 @@ export class AuthController {
     type: [BaseUser],
   })
   async signUp(@Body() signUpDto: Record<string, any>) {
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+
+    if (!emailPattern.test(signUpDto.email)) {
+      throw new BadRequestException('Invalid email format')
+    }
+
     const payload = {
       username: signUpDto.username,
       email: signUpDto.email,
@@ -35,6 +49,7 @@ export class AuthController {
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString(),
     }
+
     return await this.authService.signUp(payload)
   }
 }
